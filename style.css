@@ -1,0 +1,50 @@
+@media (orientation: landscape) {
+
+* {
+    margin: 0;
+    padding: 0;
+
+}
+
+body {
+    background-color: rgb(34, 34, 34);
+    font-size: 20px;
+    font-family: Montserrat;
+    color: #ffffff;
+}
+
+header {
+    align-items: center;
+    box-shadow: 1px 5px 10px rgb(30,30,30);
+}
+
+.headerBtn a {
+    cursor: pointer;
+    text-decoration: none;
+    color: #ffffff;
+    text-align: center;
+    padding: 3px;
+}
+
+.headerBtn {
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+    padding-left: 15px;
+    padding-bottom: 10px;
+
+}
+
+.logo {
+    width: 100px;
+}
+
+
+.itemHeader {
+    padding-left: 40px !important;
+}
+
+
+
+
+}
