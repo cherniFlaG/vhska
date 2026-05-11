@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div>
+            <div>
+
+            </div>
+            <nav>
+                <ul>
+                    <li>Фильмы</li>
+                    <li>Сериалы</li>
+                    <li>Мультфильмы</li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <header>
+            <input id="kp" placeholder="Kinopoisk ID (например 79848)">
+            <button onclick="loadMovie()">Смотреть</button>
+        </header>
+
+        <div class="container">
+            <h2 id="title">Фильм не выбран</h2>
+            <iframe id="player" width="720" height="360"></iframe>
+        </div>
+
+        <script>
+        const TOKEN = "04941a9a3ca3ac16e2b4327347bbc1";
+
+        async function loadMovie() {
+            const kp = document.getElementById("kp").value.trim();
+            const title = document.getElementById("title");
+            const player = document.getElementById("player");
+
+            if (!kp) return;
+
+            title.textContent = "Загрузка...";
+
+            try {
+                const res = await fetch(`https://api.alloha.tv/?token=${TOKEN}&kp=${kp}`);
+                const data = await res.json();
+
+                if (!data || data.status !== "success") {
+                    title.textContent = "Фильм не найден";
+                    player.src = "";
+                    return;
+                }
+
+                const movie = data.data;
+
+                title.textContent = movie.name + " (" + movie.year + ")";
+
+                if (!movie.iframe) {
+                    title.textContent += " — нет плеера";
+                    player.src = "";
+                    return;
+                }
+
+                player.src = movie.iframe;
+
+            } catch (e) {
+                title.textContent = "Ошибка загрузки";
+                player.src = "";
+            }
+        }
+        </script>
+    </main>
+</body>
+</html>
